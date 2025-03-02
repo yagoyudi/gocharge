@@ -56,9 +56,18 @@ func main() {
 
 func notify(duration int) error {
 	durationString := strconv.Itoa(duration * 1000)
-	cmd := exec.Command("notify-send", "-t", durationString, "gocharge", lowBatteryWarning)
-	if err := cmd.Run(); err != nil {
+
+	notifySendPath, err := exec.LookPath("notify-send")
+	if err != nil {
 		return err
 	}
-	return nil
+
+	cmd := exec.Command(
+		notifySendPath,
+		"-t", durationString,
+		"gocharge",
+		lowBatteryWarning,
+	)
+
+	return cmd.Run()
 }
