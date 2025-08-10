@@ -46,12 +46,12 @@ type notification struct {
 	durationMs      string
 }
 
-func newNotification(opts ...option) (notification, error) {
+func newNotification(opts ...option) (*notification, error) {
 	var options options
 	for _, opt := range opts {
 		err := opt(&options)
 		if err != nil {
-			return notification{}, err
+			return nil, err
 		}
 	}
 
@@ -76,7 +76,7 @@ func newNotification(opts ...option) (notification, error) {
 		duration = *options.durationSeconds
 	}
 
-	n := notification{
+	n := &notification{
 		title:           title,
 		body:            body,
 		durationSeconds: duration,
@@ -87,7 +87,7 @@ func newNotification(opts ...option) (notification, error) {
 }
 
 // send uses the "notify-send" to alert the user that the battery is low.
-func (n notification) send() error {
+func (n *notification) send() error {
 	notifySend, err := exec.LookPath("notify-send")
 	if err != nil {
 		return fmt.Errorf("notify-send not found: %w", err)
