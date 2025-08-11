@@ -1,6 +1,7 @@
 # gocharge
 
 Simplest way to get notified through `notify-send` when your battery is low.
+Designed for window managers/compositors environments, mainly barless setups.
 
 > [!Warning]
 > Only works on Linux. Maybe in BSDs.
